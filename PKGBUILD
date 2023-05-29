@@ -7,10 +7,22 @@ pkgdesc="dynamic window manager"
 arch=('x86_64')
 url="https://github.com/dk949/$_pkgname"
 license=('MIT')
-depends=()
-optdepends=()
+depends=(
+    'libx11'
+    'libxcb'
+    'libxft'
+    'fontconfig'
+)
+optdepends=(
+    'libxinerama: for multi-monitor use. only used when installed'
+    'alsa-lib: for controling volume. only used when installed'
+)
 makedepends=()
 provides=('dwm')
+conflicts=(
+    'dwm'
+    'dwm-git'
+)
 source=("$pkgname::git+$url")
 md5sums=() #autofill using updpkgsums
 sha256sums=('SKIP')
@@ -19,7 +31,7 @@ pkgver() {
     ___DATE="$(git -C "$pkgname" log -1 --format='%cd' --date=format:'%F')"
     ___DATE_TIME="$___DATE 00:00"
     ___COMMIT_COUNT=$(git -C "$pkgname" rev-list --count HEAD --since="$___DATE_TIME")
-    echo 5.0."$(date -d "$___DATE" +'%Y%m%d')_$___COMMIT_COUNT"
+    echo 6.2."$(date -d "$___DATE" +'%Y%m%d')_$___COMMIT_COUNT"
     unset ___DATE
     unset ___DATE_TIME
     unset ___COMMIT_COUNT
