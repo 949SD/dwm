@@ -17,6 +17,7 @@ optdepends=(
     'libxinerama: for multi-monitor use. only used when installed'
     'alsa-lib: for controling volume. only used when installed'
 )
+options=('!debug')
 makedepends=()
 provides=('dwm')
 conflicts=(
