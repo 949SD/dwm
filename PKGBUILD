@@ -40,7 +40,7 @@ pkgver() {
 
 build() {
     cd "$pkgname"
-    make -j
+    MODE=RELEASE make -j
 }
 
 package() {
