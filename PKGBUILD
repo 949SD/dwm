@@ -32,7 +32,7 @@ pkgver() {
     ___DATE="$(git -C "$pkgname" log -1 --format='%cd' --date=format:'%F')"
     ___DATE_TIME="$___DATE 00:00"
     ___COMMIT_COUNT=$(git -C "$pkgname" rev-list --count HEAD --since="$___DATE_TIME")
-    echo 6.2."$(date -d "$___DATE" +'%Y%m%d')_$___COMMIT_COUNT"
+    echo 6.5."$(date -d "$___DATE" +'%Y%m%d')_$___COMMIT_COUNT"
     unset ___DATE
     unset ___DATE_TIME
     unset ___COMMIT_COUNT
