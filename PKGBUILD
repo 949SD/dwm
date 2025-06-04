@@ -40,7 +40,7 @@ pkgver() {
 
 build() {
     cd "$pkgname"
-    MODE=RELEASE make -j
+    MODE=RELEASE ICONPREFIX=/usr/share/pixmap make -j
 }
 
 package() {
