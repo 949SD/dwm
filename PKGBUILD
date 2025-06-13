@@ -18,7 +18,7 @@ optdepends=(
     'alsa-lib: for controling volume. only used when installed'
 )
 options=('!debug')
-makedepends=()
+makedepends=('cmake' 'unzip')
 provides=('dwm')
 conflicts=(
     'dwm'
@@ -40,12 +40,20 @@ pkgver() {
 
 build() {
     cd "$pkgname"
-    DESTDIR="$pkgdir/" PREFIX="/usr" MODE=RELEASE ICONDIR=$PREFIX/share/pixmap make -j
+    . ./deps.sh
+    mkdir -p ${VENDORDIR}
+    curl -L ${NB_LINK} -o ${VENDORDIR}/noticeboard.zip
+    ( cd ${VENDORDIR} && unzip noticeboard.zip )
+    mv ${VENDORDIR}/noticeboard-* ${VENDORDIR}/noticeboard
+    CFLAGS= CXXFLAGS= cmake -S ${VENDORDIR}/noticeboard --preset make -B ${VENDORDIR}/noticeboard/build -DCMAKE_BUILD_TYPE=Release
+    CFLAGS= CXXFLAGS= cmake --build ${VENDORDIR}/noticeboard/build -- -j
+    mkdir -p ${VENDORDIR}/noticeboard/out
+    cmake --install ${VENDORDIR}/noticeboard/build --prefix ${VENDORDIR}/noticeboard/out
+    DESTDIR="$pkgdir/" PREFIX="/usr" MODE=RELEASE ICONDIR=$PREFIX/share/pixmap NOVENDOR=true make -j
 }
 
 package() {
     cd "$pkgname"
-
-    make DESTDIR="$pkgdir/" PREFIX="/usr" install
+    DESTDIR="$pkgdir/" PREFIX="/usr" MODE=RELEASE ICONDIR=$PREFIX/share/pixmap NOVENDOR=1 make install
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
