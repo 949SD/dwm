@@ -49,7 +49,7 @@ build() {
     CFLAGS= CXXFLAGS= cmake --build ${VENDORDIR}/noticeboard/build -- -j
     mkdir -p ${VENDORDIR}/noticeboard/out
     cmake --install ${VENDORDIR}/noticeboard/build --prefix ${VENDORDIR}/noticeboard/out
-    DESTDIR="$pkgdir/" PREFIX="/usr" MODE=RELEASE ICONDIR=$PREFIX/share/pixmap NOVENDOR=true make -j
+    DESTDIR="$pkgdir/" PREFIX="/usr" MODE=RELEASE ICONDIR=$PREFIX/share/pixmaps NOVENDOR=true make -j
 }
 
 package() {
